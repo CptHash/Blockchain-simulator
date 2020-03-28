@@ -6,7 +6,8 @@
 ##
 
 SRC	=	src/main.cpp \
-		src/BlockHandler.cpp
+		src/BlockHandler.cpp \
+		src/sha256.cpp
 
 OBJ	=	$(SRC:.cpp=.o)
 

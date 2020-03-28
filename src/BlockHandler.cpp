@@ -34,23 +34,22 @@ void BlockChain::dump()
     for (; n != nullptr; n = n->get_next()) {
         std::cout <<
         "id:" << std::setw(8) << std::setfill('0') << n->get_id()
-        << "       proofOfWork:" << std::setw(20) << std::setfill(' ') << n->get_proof()
-        << "       Status:" << _accepted
-        << "       Creation:" << _creationDate
+        << "    proofOfWork:" << std::setw(65) << std::setfill(' ') << n->get_proof()
+        << "    Creation:" << _creationDate
                 <<std::endl;
         nbr++;
     }
     std::cout << "Blocks accepted: " << nbr << std::endl;
 }
 
-bool BlockChain::addBlock(BlockChain *n)
+bool BlockChain::addBlock(BlockChain *n, speak isSpeaking)
 {
-    if (n->_proofOfWork != "None" && n->_proofOfWork[0] == 'n') {
+    if (n->_proofOfWork != "None" && n->_proofOfWork[0] == '0') {
         n->_prev = this;
         n->_id = this->get_id() + 1;
         _next = n;
         return true;
-    } else
+    } else if (isSpeaking == TALK)
         std::cout << "Block " << n->_id << " was rejected with the proof \""
         << n->_proofOfWork << "\"." << std::endl;
     return false;

@@ -13,11 +13,16 @@
 
 #include <iostream>
 
+enum speak {
+    TALK,
+    SILENCE
+};
+
 class BlockChain {
     public:
         BlockChain(std::string proof);
         ~BlockChain() {};
-        bool addBlock(BlockChain *n);
+        bool addBlock(BlockChain *n, speak);
         BlockChain *get_next() const noexcept;
         BlockChain *get_prev() const noexcept;
         std::string get_name() const noexcept;
@@ -27,7 +32,6 @@ class BlockChain {
         void dump();
     private:
         int _id;
-        bool _accepted = false;
         std::string _name;
         std::string _creationDate;
         std::string _proofOfWork = "None";
