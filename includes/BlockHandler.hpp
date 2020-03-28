@@ -15,16 +15,22 @@
 
 class BlockChain {
     public:
-        BlockChain(std::string name = "Default") : _name(name){};
+        BlockChain(std::string proof);
         ~BlockChain() {};
-        void addBlock(BlockChain *n);
+        bool addBlock(BlockChain *n);
         BlockChain *get_next() const noexcept;
         BlockChain *get_prev() const noexcept;
         std::string get_name() const noexcept;
+        int get_id() const noexcept;
         std::string get_proof() const noexcept;
+        std::string get_date() const noexcept;
+        void dump();
     private:
+        int _id;
+        bool _accepted = false;
         std::string _name;
-        std::string _proofOfWork;
+        std::string _creationDate;
+        std::string _proofOfWork = "None";
         BlockChain *_next = nullptr;
         BlockChain *_prev = nullptr;
 };

@@ -7,25 +7,47 @@
 
 #include "../includes/BlockHandler.hpp"
 #include "../includes/exception.hpp"
+#include <iomanip>
+#include <vector>
+#include <fstream>
 #include <iostream>
 
-void insert_blocks(BlockChain *parent, int nbr)
+void insert_blocks(BlockChain *parent, std::vector<std::string> work)
 {
     BlockChain *save = parent;
-    for (int i = 0; i < nbr; i++) {
-        parent->addBlock(new BlockChain(std::to_string(i)));
-        parent = parent->get_next();
+    bool status;
+
+    for (auto &elem: work) {
+        status = parent->addBlock(new BlockChain(elem));
+        if (status == true)
+            parent = parent->get_next();
     }
     parent = save;
 }
 
-int main ()
+void take_work(std::string path, BlockChain *head)
 {
-    BlockChain *parent = new BlockChain("test");
+    std::string line;
+    std::ifstream myfile(path);
+    std::vector<std::string> work;
+    if (myfile.is_open()) {
+        while (!myfile.eof()) {
+            getline(myfile, line);
+            work.push_back(line);
+        }
+        myfile.close();
+        insert_blocks(head, work);
+    } else
+        std::cout << "Unable to open file" << std::endl;
+}
 
-    insert_blocks(parent, 3);
+int main (int ac, char **av)
+{
+    BlockChain *head = new BlockChain("Head");
 
-    for (; parent != nullptr; parent = parent->get_next())
-        std::cout << parent->get_name() << std::endl;
+    if (ac == 2) {
+        take_work(av[1], head);
+        head->dump();
+    }
     return SUCCES;
 }
