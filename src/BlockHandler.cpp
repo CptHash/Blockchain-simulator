@@ -6,12 +6,14 @@
 */
 
 #include "../includes/BlockHandler.hpp"
+#include "../includes/sha256.hpp"
 #include <ctime>
 #include <unistd.h>
 #include <iomanip>
 #include <iostream>
 
-BlockChain::BlockChain(std::string proof = "None") : _proofOfWork(proof), _id(0)
+BlockChain::BlockChain(std::string proof = "None") : _proofOfWork(proof), _id(0),
+_sha256(sha256(proof))
 {
     time_t curr_time;
     tm * curr_tm;
@@ -34,7 +36,8 @@ void BlockChain::dump()
     for (; n != nullptr; n = n->get_next()) {
         std::cout <<
         "id:" << std::setw(8) << std::setfill('0') << n->get_id()
-        << "    proofOfWork:" << std::setw(65) << std::setfill(' ') << n->get_proof()
+        << "    proofOfWork:" << std::setw(25) << std::setfill(' ') << n->get_proof()
+        << "    Hash:" << std::setw(65) << std::setfill(' ') << n->get_sha256()
         << "    Creation:" << _creationDate
                 <<std::endl;
         nbr++;
@@ -44,7 +47,9 @@ void BlockChain::dump()
 
 bool BlockChain::addBlock(BlockChain *n, speak isSpeaking)
 {
-    if (n->_proofOfWork != "None" && n->_proofOfWork[0] == '0') {
+    if (n->_proofOfWork != "None" && n->_sha256[0] == '0'
+    && n->_sha256[1] == '0' && n->_sha256[2] == '0'
+    && n->_sha256[3] == '0' && n->_sha256[4] == '0') {
         n->_prev = this;
         n->_id = this->get_id() + 1;
         _next = n;
@@ -66,3 +71,5 @@ std::string BlockChain::get_date() const noexcept { return _creationDate;}
 std::string BlockChain::get_name() const noexcept { return _name;}
 
 std::string BlockChain::get_proof() const noexcept { return _proofOfWork;}
+
+std::string BlockChain::get_sha256() const noexcept { return _sha256;}

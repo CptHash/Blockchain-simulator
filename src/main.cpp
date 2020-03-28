@@ -6,7 +6,6 @@
 */
 
 #include "../includes/BlockHandler.hpp"
-#include "../includes/sha256.hpp"
 #include "../includes/exception.hpp"
 #include <iomanip>
 #include <cstring>
@@ -21,7 +20,7 @@ void insert_blocks(BlockChain *parent, std::vector<std::string> work, speak isSp
     bool status;
 
     for (auto &elem: work) {
-        status = parent->addBlock(new BlockChain(sha256(elem)), isSpeaking);
+        status = parent->addBlock(new BlockChain(elem), isSpeaking);
         if (status == true)
             parent = parent->get_next();
     }
