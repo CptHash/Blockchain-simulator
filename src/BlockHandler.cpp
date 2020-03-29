@@ -42,14 +42,13 @@ void BlockChain::dump()
                 <<std::endl;
         nbr++;
     }
-    std::cout << "Blocks accepted: " << nbr << std::endl;
+    std::cout << "Blocks accepted: " << nbr - 1 << std::endl;
 }
 
 bool BlockChain::addBlock(BlockChain *n, speak isSpeaking)
 {
     if (n->_proofOfWork != "None" && n->_sha256[0] == '0'
-    && n->_sha256[1] == '0' && n->_sha256[2] == '0'
-    && n->_sha256[3] == '0' && n->_sha256[4] == '0') {
+    && n->_sha256[1] == '0' && n->_sha256[2] == '0') {
         n->_prev = this;
         n->_id = this->get_id() + 1;
         _next = n;

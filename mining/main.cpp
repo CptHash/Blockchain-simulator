@@ -22,8 +22,9 @@ std::string random_string( size_t length )
 
 int main()
 {
+
     srand (time(NULL));
-    while (1) {
+    for (int i = 0; i < 2000; i++) {
         std::cout << random_string(rand() % 65 + 5) << std::endl;
     }
 }
