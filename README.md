@@ -1,7 +1,7 @@
 # Blockchain-simulator
 A project to simulate a basic Blockchain
 
-Starting emulate a mining.
+Starting emulate a mining session.
 ```sh
 $ ./mining/mining > compute.txt 
 ```
