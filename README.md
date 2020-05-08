@@ -6,13 +6,6 @@ Starting emulate a mining session.
 $ ./mining/mining > compute.txt 
 ```
 
-
-Stop the mining emulation.
-```sh
-$ CTRL+C
-```
-
-
 Starting the Blockchain emulator
 ```sh
 $ ./test compute.txt 
